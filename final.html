@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>期末作業-記帳</title>
+    <link rel="stylesheet" href="final.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+</head>
+<body>
+    <h1>記帳系統</h1>
+
+
+    <div id="alertuser" class="alert alert-info alert-dismissible fade show">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>請輸入使用者名稱</strong>
+    </div>
+    <form>
+        <div class="input-group mb-3">
+
+            <input type="text" id="idname" class="form-control" placeholder="使用者名稱">
+            <button type="button" id="s_id" class="btn btn-primary">儲存</button>
+        </div>
+    </form>
+    <font color="#FF0000"><h3 id="username"><span class="badge badge-danger">尚未輸入使用者名稱</span></h3></font>
+
+    <!--新增(摺疊)-->
+    <p>
+        <button id="keyin" class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            新增紀錄
+        </button>
+    </p>
+    <div class="collapse" id="collapseExample">
+
+
+        <form>
+            <div class="input-group mb-3">
+
+                <!--收支-->
+
+                <select id="io">
+                    <option>請選擇收支</option>
+                    <option value="收入">收入</option>
+                    <option value="支出">支出</option>
+                </select>
+                <!--金額-->
+                <!--時間-->
+                <input type="text" id="time" class="form-control" placeholder="時間">
+                <!--下拉內容-->
+
+                <select id="thing">
+                    <option>請選擇種類</option>
+                    <option value="食物">食物</option>
+                    <option value="裝扮">裝扮</option>
+                    <option value="交通">交通</option>
+                    <option value="娛樂">娛樂</option>
+                    <option value="其他">其他</option>
+                </select>
+                <!--金額-->
+                <input type="text" id="money" class="form-control" placeholder="金額">
+                <!--備註-->
+                <input type="text" id="other" class="form-control" placeholder="備註">
+                <!--提交-->
+
+                <button type="button" id="submit" class="btn btn-success">送出</button>
+            </div>
+        </form>
+
+
+
+    </div>
+    <!--最後表格-->
+    <table id="final">
+        <tr class="finish">
+            <th>收支</th>
+            <th>時間</th>
+            <th>內容</th>
+            <th>金額</th>
+            <th>備註</th>
+        </tr>
+        <tr>
+            <th>支出</th>
+            <td>12/30</td>
+            <td>食物</td>
+            <td>600</td>
+            <td>海底撈</td>
+        </tr>
+
+    </table>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script>
+        let user = JSON.parse(localStorage.getItem('idname') || {})
+        document.getElementById("username").innerHTML = "當前使用者為:" + (user.user);
+        $("h3").css('color', 'blue');
+    </script>
+    <script>
+
+        $(function () {
+            $('#submit').click(function () {
+                var io = document.getElementById("io").value;
+                var time = document.getElementById("time").value;
+                var thing = document.getElementById("thing").value;
+                var money = document.getElementById("money").value;
+                var other = document.getElementById("other").value;
+
+                var td_io = document.createElement("td");
+                var text_io = document.createTextNode(io);
+                td_io.appendChild(text_io);
+                var td_time = document.createElement("td");
+                var text_time = document.createTextNode(time);
+                td_time.appendChild(text_time);
+                var td_thing = document.createElement("td");
+                var text_thing = document.createTextNode(thing);
+                td_thing.appendChild(text_thing);
+                var td_money = document.createElement("td");
+                var text_money = document.createTextNode(money);
+                td_money.appendChild(text_money);
+                var td_other = document.createElement("td");
+                var text_other = document.createTextNode(other);
+                td_other.appendChild(text_other);
+
+                var tr = document.createElement("tr");
+                tr.appendChild(td_io);
+                tr.appendChild(td_time);
+                tr.appendChild(td_thing);
+                tr.appendChild(td_money);
+                tr.appendChild(td_other);
+
+                var table = document.getElementsByTagName("table")[0];
+                table.appendChild(tr);
+
+                alert("新增成功");
+            });
+
+            $('#s_id').click(function () {
+                let store = {
+                    'user': $('#idname').val()
+                };
+                localStorage.setItem('idname', JSON.stringify(store));
+
+                let user = JSON.parse(localStorage.getItem('idname') || {})
+                document.getElementById("username").innerHTML = "當前使用者為:" + (user.user);
+                $("h3").css('color', 'blue');
+                $("#alertuser").css("display", "none");
+
+            });
+        });
+    </script>
+</body>
+</html>

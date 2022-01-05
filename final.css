@@ -1,0 +1,12 @@
+table, td, th {
+    border: 1px solid;
+    border-collapse: collapse;
+}
+
+.finish {
+    background-color: turquoise;
+}
+
+.create {
+    background-color: violet;
+}
